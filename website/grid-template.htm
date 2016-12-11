@@ -1,0 +1,24 @@
+<table class="table">
+	<thead>
+	<tr>
+		<th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+			{{ key | capitalize }}  
+			<span :class="sortOrderIconClass(key)"></span>
+		</th>
+	</tr>
+		</thead>
+		<tbody>
+	<tr v-for="entry in filteredData">
+		<td v-for="key in columns">
+			{{entry[key]}}
+		</td>
+	</tr>
+		</tbody>
+		<tfoot>
+	<tr>
+		<td colspan="2">
+			<demo-grid-pager></demo-grid-pager>
+		</td>
+	</tr>
+	</tfoot>
+</table>

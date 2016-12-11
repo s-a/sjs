@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title> 
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<!-- component template -->
+	<script type="text/x-template" id="vdg-pager-template">
+		<tr>
+            <td :colspan="$parent.colspan">
+		        loading...
+                xx{{$parent.page}}xx
+			    <span class="glyphicon glyphicon-fullscreen"></span>
+			    <span class="glyphicon glyphicon-resize-full"></span>
+			    <span class="glyphicon glyphicon-download-alt"></span>
+			    <span :class="$parent.glyphicon" ></span> 
+                <span v-for="n in $parent.pages">
+                    <a @click="$parent.pagerClick(n.number,$event)" v-if="n.number !== $parent.page" href="#">{{ n.number }}</a>
+                    <strong v-if="n.number === $parent.page">{{ n.number }}</strong>
+                </span>  
+            </td>
+		</tr>
+	</script>
+ 
+	<!-- component template -->
+	<script type="text/x-template" id="vdg-template">
+        <div class="table-container">
+
+	  <table class="table" >
+	    <thead>
+            <vdg-pager></vdg-pager>
+            <tr>
+                <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+	                {{ key | capitalize }}  
+	                <span :class="sortOrderIconClass(key)"></span>
+                </th>
+            </tr>
+	    </thead>
+	    <tbody>
+	      <tr v-for="row in data">
+	        <td v-for="key in columns" contenteditable>
+	          {{row[key]}}
+	        </td>
+	      </tr>
+	    </tbody>
+	      <tfoot>
+            <vdg-pager></vdg-pager>
+		  </tfoot>
+	  </table>
+    </div>
+	</script>
+
+	<!-- demo root element -->
+    <h1>Demo</h1>
+	<vdg class="vdg"
+		url="http://localhost:53817/api/Win32_Service/"
+        pageSize="1"
+		data-classname-icon-sort-up = "glyphicon glyphicon-menu-up"
+		data-classname-icon-sort-down = "glyphicon glyphicon-menu-down"
+		data-classname-icon-sort-neutral = "glyphicon glyphicon-option-horizontal" 
+        glyphicon="glyphicon glyphicon-wrench"
+		>
+	</vdg>
+ 
+    <style>
+        
+    </style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+	<script type="text/javascript" src="vdg.js"></script>
+    <script>
+        new Vue({
+            el: '.vdg',
+            data: { 
+            }
+        });
+    </script>
+</body>
+</html>
